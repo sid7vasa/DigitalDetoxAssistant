@@ -24,12 +24,11 @@ SKILLS = ['Deep Learning', 'Convolutional Neural Networks', 'TensorFlow', 'Machi
 #           'DLCs']
 
 
-
 rare_word_threshold = 2700
-DRIVER_PATH = r'D:\Downloads\chromedriver_win32\chromedriver.exe'
+DRIVER_PATH = r"D:\Downloads\chromedriver_win32\chromedriver.exe"
 HEADLESS = True
 SKILL_INFO_PATH = "../data/skills_elmo.csv"
-WITH_ELMO = True
+WITH_ELMO = False
 if WITH_ELMO:
     SKILL_WORD_PATH = '../data/skill_words.pkl'
 else:
@@ -37,4 +36,3 @@ else:
 TEST_URL = "https://www.wired.com/story/should-anyone-actually-care-about-ray-tracing/"
 ELMO_PATH = "../word_representation_model/elmo"
 META_PATH = "../data/meta.npy"
-

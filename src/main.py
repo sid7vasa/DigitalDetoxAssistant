@@ -3,8 +3,6 @@ import pickle
 from sklearn.metrics.pairwise import cosine_similarity
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import elmo
-import dummyElmo
 from utils import tokenize
 from utils import Utils
 from utils import find_word
@@ -13,6 +11,11 @@ import utils
 from fetched_word import FetchedWord
 import config
 from webpage import Webpage
+
+if config.WITH_ELMO:
+    import elmo
+else:
+    import dummyElmo
 
 if __name__ == '__main__':
     options = Options()
@@ -89,10 +92,15 @@ if __name__ == '__main__':
             index = find_word_root(s_words, word.root)
             if index >= 0:
                 matched_words.append(word)
-                sim = similarity(word, s_words[index])[0][0]
+                if config.WITH_ELMO:
+                    sim = similarity(word, s_words[index])[0][0]
+                else:
+                    sim = 1.0
                 matched_count = matched_count + (0.6 * word.count + 1.0 * s_words[index].count) * sim
-                if config.DEBUG:
+                if config.DEBUG and config.WITH_ELMO:
                     print("Similarity for the word: ", word.word, sim)
+                if config.DEBUG and not config.WITH_ELMO:
+                    print("Common word: ", word.word)
                 s_count.append(s_words[index].count)
                 f_count.append(word.count)
         return matched_words, matched_count
@@ -117,8 +125,8 @@ if __name__ == '__main__':
         meta = len_skills - len(meta)
         if config.DEBUG:
             print("META is", meta)
-        score = (count / (total(fetched_rare_words))) * (21.0/meta)
-        if score > 0.4 and score <0.6:
+        score = (count / (total(fetched_rare_words))) * (21.0 / meta)
+        if 0.4 < score < 0.6:
             print("Page vistied is moderately related: ", score)
 
         elif score >= 0.6:
