@@ -83,27 +83,34 @@ if __name__ == '__main__':
         return cosine_similarity(emb1.reshape(1, 1024), emb2.reshape(1, 1024))
 
 
+    # Loops through the fetched words and finds all the words that match with the extracted skill information.
+    # It then computes the context at which the words are used (similarity) using elmo and gives a score.
+    # All this score is added up and matched word count score is returned.
     def relevance(s_words, f_words):
         matched_words = []
-        matched_count = 0
+        matched_count_score = 0
         s_count = []
         f_count = []
         for word in f_words:
+            # gives the index of the word in the extracted skill words list.
             index = find_word_root(s_words, word.root)
             if index >= 0:
                 matched_words.append(word)
                 if config.WITH_ELMO:
+                    # Gives the similarity score of context for two same words used in webpages and in the skill
+                    # information.
                     sim = similarity(word, s_words[index])[0][0]
                 else:
                     sim = 1.0
-                matched_count = matched_count + (0.6 * word.count + 1.0 * s_words[index].count) * sim
+                # feature engineering, tried multiple combinations and decided to use these weights.
+                matched_count_score = matched_count_score + (0.6 * word.count + 1.0 * s_words[index].count) * sim
                 if config.DEBUG and config.WITH_ELMO:
                     print("Similarity for the word: ", word.word, sim)
                 if config.DEBUG and not config.WITH_ELMO:
                     print("Common word: ", word.word)
                 s_count.append(s_words[index].count)
                 f_count.append(word.count)
-        return matched_words, matched_count
+        return matched_words, matched_count_score
 
 
     def total(words):
@@ -114,7 +121,7 @@ if __name__ == '__main__':
 
 
     while True:
-        url = input("Enter the URL or N\n")
+        url = input("Enter the URL or N:\n")
         if url == "N":
             break
         print("Fetching the URL: ", url)

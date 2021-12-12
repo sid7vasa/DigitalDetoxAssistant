@@ -2,7 +2,6 @@ import numpy as np
 import config
 import spacy
 import nltk
-import string
 import re
 
 
@@ -13,7 +12,6 @@ def tokenize(sentence):
 
 def remove_punctuation(text):
     try:
-        # punctuation_free = "".join([i for i in text if i not in string.punctuation+'’\“'])
         punctuation_free = re.sub(r'[^\w\s]', '', text)
         punctuation_free = punctuation_free.replace("\n", " ")
 
