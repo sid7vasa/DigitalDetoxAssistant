@@ -15,7 +15,8 @@ def remove_punctuation(text):
         punctuation_free = re.sub(r'[^\w\s]', '', text)
         punctuation_free = punctuation_free.replace("\n", " ")
 
-    except:
+    except Exception as e:
+        print("Exception at remove_punctuation: utils", e)
         return " "
     return punctuation_free
 
@@ -28,8 +29,8 @@ def sentence_tokenization(text):
 def lower_case(text):
     try:
         lower = text.lower()
-    except:
-        print("Lower Case failed?")
+    except Exception as e:
+        print("Lower Case failed?", e)
         return ""
     return lower
 
@@ -46,6 +47,18 @@ def find_word_root(li, word):
         if word == el.root:
             return i
     return -1
+
+
+def extract_text(tag):
+    if tag is not None:
+        li = [text.text for text in tag]
+        return ". ".join(li)
+
+
+def preprocess_sentence_text(text):
+    text = lower_case(text)
+    sentences = sentence_tokenization(text)
+    return [remove_punctuation(sent) for sent in sentences]
 
 
 class Utils:
@@ -73,14 +86,3 @@ class Utils:
             output.append(' '.join(s))
         return output[0]
 
-
-def extract_text(tag):
-    if tag is not None:
-        li = [text.text for text in tag]
-        return ". ".join(li)
-
-
-def preprocess_sentence_text(text):
-    text = lower_case(text)
-    sentences = sentence_tokenization(text)
-    return [remove_punctuation(sent) for sent in sentences]

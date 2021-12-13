@@ -33,14 +33,14 @@ DRIVER = webdriver.Chrome(executable_path=DRIVER_PATH, options=options)
 SKILL_INFO_PATH = "../data/skills_elmo.csv"
 
 # Rare word skills with embeddings.
-WITH_ELMO = True
+WITH_ELMO = False
 if WITH_ELMO:
     SKILL_WORD_PATH = '../data/skill_words.pkl'
 else:
     SKILL_WORD_PATH = '../data/skill_words_without_elmo.pkl'
 
 # Test url if needed
-TEST_URL = "https://www.wired.com/story/should-anyone-actually-care-about-ray-tracing/"
+TEST_URL = "https://www.geeksforgeeks.org/binary-tree-set-1-introduction/"
 
 # Meta is used to factor the number of skills given by the user.
 # This is used to balance the score based on the number of skill keywords extracted.
