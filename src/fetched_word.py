@@ -9,7 +9,7 @@ class FetchedWord:
         self.tag = tag
 
     def __str__(self):
-        return str(self.word + str(str(" [") + str(self.count) + str(" ") + str(self.tag)) + str("]"))
+        return str("<<"+self.word + str(str(" [") + str(self.count) + str(" ") + str(self.tag)) + str("]")+">>")
 
     def __repr__(self):
         return self.__str__()

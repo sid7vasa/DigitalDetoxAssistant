@@ -1,7 +1,6 @@
 from utils import extract_text
 from utils import preprocess_sentence_text
 from utils import tokenize
-import numpy as np
 import textwrap
 
 

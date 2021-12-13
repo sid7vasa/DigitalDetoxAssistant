@@ -16,7 +16,8 @@ if __name__ == '__main__':
     else:
         elmo = dummyElmo.Elmo()
 
-    if config.DEBUG: print("loading skill words from: ", config.SKILL_WORD_PATH)
+    if config.DEBUG:
+        print("loading skill words from: ", config.SKILL_WORD_PATH)
     tools = Utils()
     print("Opening your skill information: ")
     with open(config.SKILL_WORD_PATH, 'rb') as handle:

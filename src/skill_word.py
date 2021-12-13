@@ -9,7 +9,7 @@ class SkillWord:
         self.skills = []
 
     def __str__(self):
-        return str(self.word + str(" [") + str(self.count) + str(" ") + str(set(self.skills)) + str("]"))
+        return str("<<"+self.word + str(" [") + str(self.count) + str(" ") + str(set(self.skills)) + str("]")+">>")
 
     def __repr__(self):
         return self.__str__()

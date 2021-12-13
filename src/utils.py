@@ -61,6 +61,17 @@ def preprocess_sentence_text(text):
     return [remove_punctuation(sent) for sent in sentences]
 
 
+def get_web_embedding(f_words):
+    page_embedding = []
+    if len(f_words) > 50:
+        f_words.sort(key=lambda x: x.count, reverse=True)
+        for word in f_words[:50]:
+            emb = np.mean(word.embeddings, axis=0)
+            page_embedding.append(emb)
+    page_embedding = np.array(page_embedding)
+    return page_embedding
+
+
 class Utils:
     def __init__(self):
         self.bert_vocab = list(np.load("../data/bert_vocab.npy"))
@@ -85,4 +96,3 @@ class Utils:
             s = [token.lemma_ for token in self.nlp(i)]
             output.append(' '.join(s))
         return output[0]
-
